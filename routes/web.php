@@ -13,16 +13,16 @@
 
 Auth::routes();
 
+
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('/tasks', 'TaskController');
 });
 
-Route::post ('/tasks', 'TaskController@index')->name('tasks.index');
 
 Route::group(['prefix'=>'admin',
             'middleware' => ['admin'],
             'namespace' => 'Admin'], function(){
-    Route::resource('/', 'DashboardController');
+    Route::get('/', 'DashboardController@index');
     Route::resource('/tasks', 'TaskController',['except' => ['create', 'store']]);
     Route::resource('/users', 'UsersController',['except' => ['create', 'store']]);
 });
